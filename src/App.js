@@ -29,6 +29,7 @@ handleSubmit = (event) => {
     this.setState({ [name]: value });
   };
 
+
   getAllTitles = () => {
     axios.get(`http://localhost:4000/api/v1/todos`)
     .then((apiResponse) => {
@@ -36,8 +37,22 @@ handleSubmit = (event) => {
     })
   }
 
+  deleteListItem = () => {
+    
+
+    axios.delete(`http://localhost:4000/api/v1/todos/:id`)
+    	.then( () => this.props.history.push('/todos') )
+    	.catch( (err) => console.log(err));
+  }
+
+// this.deleteTodo(todo._id)
+
+
+
+
+
   componentDidMount() {
-    this.getAllTitles();
+    this.getAllTitles()
   }
 
   render() {
@@ -62,7 +77,7 @@ handleSubmit = (event) => {
                 return (
                   <div key={toDoItem._id} className="to-do-item">
                     <h3>{toDoItem.title}</h3>
-                    <button>Delete Item</button>
+                    <button onClick={ (key) => this.deleteListItem()}>Delete Item</button>
                   </div>
                 )
               })
