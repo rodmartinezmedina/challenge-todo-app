@@ -37,8 +37,7 @@ handleSubmit = (event) => {
     })
   }
 
-  deleteListItem = () => {
-    
+  deleteListItem = () => {    
 
     axios.delete(`http://localhost:4000/api/v1/todos/:id`)
     	.then( () => this.props.history.push('/todos') )
@@ -46,10 +45,6 @@ handleSubmit = (event) => {
   }
 
 // this.deleteTodo(todo._id)
-
-
-
-
 
   componentDidMount() {
     this.getAllTitles()
