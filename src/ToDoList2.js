@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-
 import AddListItem from './AddListItem';
 
 class TodoList extends Component {
-  this.state = {
+  state = {
      title: '',
      toDoList: [] 
   };
@@ -17,11 +16,7 @@ class TodoList extends Component {
     })
   }
   
-  componentDidMount() {
-    this.getAllTitles()
-  }
-
-    // deleteListItem = (id) => {
+  // deleteListItem = (id) => {
   //   // this.id.preventDefault();
   //   axios
   //     .delete(`http://localhost:4000/api/v1/todos/${id}`)
@@ -33,30 +28,20 @@ class TodoList extends Component {
   //   	.catch( (err) => console.log(err))
   // }
 
+  componentDidMount() {
+    this.getAllTitles()
+  }
+
   render() {
     const { toDoList } = this.state;
-
-    return (
     <div>
-      <AddListItem dataFromTodoList={this.getAllTitles } />
-      <div>
-        {
-          listOfProjects.map( (project) => {
-            return (
-              <div key={project._id} className='project'>
-                <Link to={`/projects/${project._id}`}>
-                  <h3>{project.title}</h3>
-                  <p>{project.description} </p>
-                </Link>
-              </div>
-            )
-          })
-        }
-      </div>  
+    <AddListItem />
     
     </div>
-    )
   }
+
+
+
 }
 
 
