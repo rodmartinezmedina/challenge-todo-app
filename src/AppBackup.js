@@ -8,6 +8,33 @@ class App extends Component {
     this.state = { title: '', toDoList: [] };
   }
 
+
+  getAllTitles = () => {
+    axios.get(`http://localhost:4000/api/v1/todos`)
+    .then((apiResponse) => {
+      this.setState({ toDoList: apiResponse.data })
+    })
+  };
+
+
+  deleteListItem = (id) => {
+    // this.id.preventDefault();
+    axios
+      .delete(`http://localhost:4000/api/v1/todos/${this.id}`)
+    	.then( () => {
+        console.log(`Item list ${id} deleted`);
+        this.setState(this.item.id)      
+        this.getAllTitles();     
+      })
+    	.catch( (err) => console.log(err))
+  }
+
+
+  componentDidMount() {
+    this.getAllTitles()
+  }
+
+
   handleSubmit = (event) => {
     event.preventDefault();
     const { title, toDoList } = this.state;
