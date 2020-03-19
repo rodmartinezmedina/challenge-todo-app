@@ -14,7 +14,6 @@ handleSubmit = (event) => {
 
     axios.post ('http://localhost:4000/api/v1/todos', {title, toDoList} )
       .then ( () => {
-        this.props.getData();
         this.setState({ 
           title: '', toDoList: [...this.state.toDoList, this.state.title]
         })
@@ -28,6 +27,16 @@ handleSubmit = (event) => {
     this.setState({ [name]: value });
   };
 
+  getAllTitles = () => {
+    axios.get(`http://localhost:4000/api/v1/todos`)
+    .then((apiResponse) => {
+      this.setState({ toDoList: apiResponse.data })
+    })
+  }
+
+  componentDidMount() {
+    this.getAllTittles();
+  }
 
   render() {
     return (
@@ -44,6 +53,19 @@ handleSubmit = (event) => {
             <button>Add to list</button>
           
           </form>
+
+          <div>
+            {
+              toDoList.map( (toDoItem) => {
+                return (
+                  <div key={toDoItem._id} className="to-do-item">
+                    <h3>{toDoItem.title}</h3>
+                  </div>
+                )
+              })
+            }
+
+          </div>
 
         </header>
       </div>
