@@ -9,7 +9,46 @@ class App extends Component {
   }
 
 
-handleSubmit = (event) => {
+  getAllTitles = () => {
+    axios.get(`http://localhost:4000/api/v1/todos`)
+    .then((apiResponse) => {
+      this.setState({ toDoList: apiResponse.data })
+    })
+  };
+
+
+  deleteListItem = (id) => {
+    // this.id.preventDefault();
+    axios
+      .delete(`http://localhost:4000/api/v1/todos/${this.id}`)
+    	.then( () => {
+        let toDoListCopy = this.state.toDoList// grab a copy of the todo list
+        for (let i = 0; i < toDoListCopy.length; i++) {
+          let todo = this.todoListCopy[i]
+          if (todo.id === id) {        // if it’s the correct ID...
+            this.todoListCopy.splice(i, 1)  // delete the item
+            break                      // we’re done! break the loop
+          }
+        }
+        this.setState({todoListItems: this.todoListCopy}) // we update state
+      })
+
+
+
+      //   console.log(`Item list ${id} deleted`);
+      //   this.setState(this.item.id)      
+      //   this.getAllTitles();     
+      // })
+    	.catch( (err) => console.log(err))
+  }
+
+
+  componentDidMount() {
+    this.getAllTitles()
+  }
+
+
+  handleSubmit = (event) => {
     event.preventDefault();
     const { title, toDoList } = this.state;
 
@@ -30,25 +69,7 @@ handleSubmit = (event) => {
   };
 
 
-  getAllTitles = () => {
-    axios.get(`http://localhost:4000/api/v1/todos`)
-    .then((apiResponse) => {
-      this.setState({ toDoList: apiResponse.data })
-    })
-  }
 
-  deleteListItem = () => {    
-
-    axios.delete(`http://localhost:4000/api/v1/todos/:id`)
-    	.then( () => this.props.history.push('/todos') )
-    	.catch( (err) => console.log(err));
-  }
-
-// this.deleteTodo(todo._id)
-
-  componentDidMount() {
-    this.getAllTitles()
-  }
 
   render() {
     return (
@@ -72,7 +93,7 @@ handleSubmit = (event) => {
                 return (
                   <div key={toDoItem._id} className="to-do-item">
                     <h3>{toDoItem.title}</h3>
-                    <button onClick={ (key) => this.deleteListItem()}>Delete Item</button>
+                    <button onClick={ () => this.deleteListItem()}>Delete Item</button>
                   </div>
                 )
               })
