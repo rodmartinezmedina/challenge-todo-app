@@ -8,6 +8,7 @@ class App extends Component {
     this.state = { title: '', toDoList: [] };
   }
 
+
 handleSubmit = (event) => {
     event.preventDefault();
     const { title, toDoList } = this.state;
@@ -61,6 +62,7 @@ handleSubmit = (event) => {
                 return (
                   <div key={toDoItem._id} className="to-do-item">
                     <h3>{toDoItem.title}</h3>
+                    <button>Delete Item</button>
                   </div>
                 )
               })

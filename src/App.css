@@ -2,6 +2,15 @@
   text-align: center;
 }
 
+.to-do-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  margin-bottom: -40px;
+}
+
 
 
 /* 
