@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 import AddListItem from './AddListItem';
 
 class TodoList extends Component {
-  this.state = {
+  state = {
      title: '',
      toDoList: [] 
   };
@@ -13,41 +13,38 @@ class TodoList extends Component {
   getAllTitles = () => {
     axios.get(`http://localhost:4000/api/v1/todos`)
     .then((apiResponse) => {
-      this.setState({ toDoList: apiResponse.data })
+      this.setState({ ToDoList: apiResponse.data })
     })
   }
   
+    deleteListItem = (id) => {
+    axios
+      .delete(`http://localhost:4000/api/v1/todos/${id}`)
+    	.then( () => {
+        console.log(`Deleted ${id} task`);
+        this.getAllTitles();     
+      })
+    	.catch( (err) => console.log(err))
+  }
+
   componentDidMount() {
     this.getAllTitles()
   }
-
-    // deleteListItem = (id) => {
-  //   // this.id.preventDefault();
-  //   axios
-  //     .delete(`http://localhost:4000/api/v1/todos/${id}`)
-  //   	.then( () => {
-  //       console.log(`${id} deleted`);
-  //       this.setState(this.item.id)      
-  //       this.getAllTitles();     
-  //     })
-  //   	.catch( (err) => console.log(err))
-  // }
 
   render() {
     const { toDoList } = this.state;
 
     return (
-    <div>
+    <div> 
       <AddListItem dataFromTodoList={this.getAllTitles } />
       <div>
         {
-          listOfProjects.map( (project) => {
+          toDoList.map( (todoItem) => {
             return (
-              <div key={project._id} className='project'>
-                <Link to={`/projects/${project._id}`}>
-                  <h3>{project.title}</h3>
-                  <p>{project.description} </p>
-                </Link>
+              <div key={todoItem._id} className='todoItem'>
+                {/* <Link to={`/todos/${todoItem._id}`}> */}
+                  <h3>{todoItem.title}</h3>
+                {/* </Link> */}
               </div>
             )
           })
@@ -61,3 +58,5 @@ class TodoList extends Component {
 
 
 export default TodoList;
+
+{/* <button onClick={ () => this.deleteListItem()}>Delete Item</button> */}
