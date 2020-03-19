@@ -17,8 +17,9 @@ handleSubmit = (event) => {
         this.setState({ 
           title: '', toDoList: [...this.state.toDoList, this.state.title]
         })
+        this.getAllTitles();
       })
-      .catch( (err) => console.log(err) )    
+      .catch( (err) => console.log(err) )   
   }
 
 
@@ -35,7 +36,7 @@ handleSubmit = (event) => {
   }
 
   componentDidMount() {
-    this.getAllTittles();
+    this.getAllTitles();
   }
 
   render() {
@@ -56,7 +57,7 @@ handleSubmit = (event) => {
 
           <div>
             {
-              toDoList.map( (toDoItem) => {
+              this.state.toDoList.map( (toDoItem) => {
                 return (
                   <div key={toDoItem._id} className="to-do-item">
                     <h3>{toDoItem.title}</h3>
